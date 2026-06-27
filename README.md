@@ -3,6 +3,15 @@
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that
 provides weather data — current conditions and forecasts — to AI agents.
 
+### what an MCP Server?
+```
+An MCP server is just a Python program that:
+1. Starts a server.
+2. Registers one or more tools.
+3. Waits for a client (Cline) to call those tools.
+4. Executes the requested tool.
+5. Returns the result.
+```
 ## Architecture
 
 ```
@@ -74,11 +83,22 @@ Both tools accept `units` (`metric`, `imperial`, or `standard`).
 pytest tests/
 ```
 
-what an MCP Server?
-An MCP server is just a Python program that:
+### Output format
+Here's the current weather for **Mumbai** fetched live from the weather-mcp server:
 
-1. Starts a server.
-2. Registers one or more tools.
-3. Waits for a client (Cline) to call those tools.
-4. Executes the requested tool.
-5. Returns the result.
+---
+**☁️ Mumbai, IN — Broken Clouds**
+
+| Metric | Value |
+|--------|-------|
+| 🌡 Temperature | **30.1°C** (feels like **35.5°C**) |
+| 📊 Min / Max | 30.1°C / 30.1°C |
+| 💧 Humidity | **71%** |
+| 🌬 Wind | **4.4 m/s** at 255° (WSW) |
+| 👁 Visibility | **10,000 m** |
+| ☁️ Cloud Cover | **82%** |
+| 🔽 Pressure | **1006 hPa** |
+
+---
+
+Notice the **feels-like temperature (35.5°C)** is noticeably higher than the actual 30.1°C — this is due to the high humidity (71%) making it feel much hotter, which is typical for Mumbai's coastal climate.
