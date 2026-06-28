@@ -35,6 +35,7 @@ CURRENT_WEATHER_TOOL = Tool(
             {"required": ["city"]},
             {"required": ["lat", "lon"]},
         ],
+        "additionalProperties": False,
     },
 )
 
@@ -63,6 +64,7 @@ FORECAST_TOOL = Tool(
             {"required": ["city"]},
             {"required": ["lat", "lon"]},
         ],
+        "additionalProperties": False,
     },
 )
 
@@ -77,9 +79,10 @@ def register_tools(server: Server, service: WeatherService) -> None:
         return [CURRENT_WEATHER_TOOL, FORECAST_TOOL]
 
     @server.call_tool()
-    async def call_tool(name: str, arguments: dict) -> list[TextContent]:
+    async def call_tool(name: str, arguments: dict | None,) -> list[TextContent]:
         logger.info("Tool called: %s %s", name, arguments)
-
+        arguments = arguments or {}
+        
         if name == "get_current_weather":
             return [await _handle_current_weather(service, arguments)]
         elif name == "get_forecast":
